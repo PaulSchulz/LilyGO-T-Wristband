@@ -477,8 +477,8 @@ void loop()
                 tft.fillScreen(TFT_BLACK);
                 tft.drawString("Reset WiFi Setting",  20, tft.height() / 2 );
                 delay(3000);
-                wifiManager.resetSettings();
-                wifiManager.erase(true);
+                // wifiManager.resetSettings();
+                // wifiManager.erase(true);
                 esp_restart();
             }
         }
