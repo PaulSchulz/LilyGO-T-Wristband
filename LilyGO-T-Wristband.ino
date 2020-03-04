@@ -401,7 +401,7 @@ void RTC_Show()
             // Font 7 is to show a pseudo 7 segment display.
             // Font 7 only contains characters [space] 0 1 2 3 4 5 6 7 8 9 0 : .
             tft.drawString("88:88", xpos, ypos, 7); // Overwrite the text to clear it
-            tft.setTextColor(0xFBE0, TFT_BLACK); // Orange
+            tft.setTextColor(0xAAA0, TFT_BLACK);
             omm = mm;
 
             if (hh < 10) xpos += tft.drawChar('0', xpos, ypos, 7);
@@ -428,15 +428,21 @@ void IMU_Show()
     tft.fillScreen(TFT_BLACK);
     tft.setTextDatum(TL_DATUM);
     readMPU9250();
-    snprintf(buff, sizeof(buff), "--  ACC  GYR   MAG");
+
+    snprintf(buff, sizeof(buff), "-- --ACC-- --GYR-- --MAG--");
     tft.drawString(buff, 0, 0);
-    snprintf(buff, sizeof(buff), "x %.2f  %.2f  %.2f", (int)1000 * IMU.ax, IMU.gx, IMU.mx);
+    snprintf(buff, sizeof(buff), "x: %7.1f %7.1f %7.1f", (int)1000 * IMU.ax, IMU.gx, IMU.mx);
     tft.drawString(buff, 0, 16);
-    snprintf(buff, sizeof(buff), "y %.2f  %.2f  %.2f", (int)1000 * IMU.ay, IMU.gy, IMU.my);
+    snprintf(buff, sizeof(buff), "y: %7.1f %7.1f %7.1f", (int)1000 * IMU.ay, IMU.gy, IMU.my);
     tft.drawString(buff, 0, 32);
-    snprintf(buff, sizeof(buff), "z %.2f  %.2f  %.2f", (int)1000 * IMU.az, IMU.gz, IMU.mz);
+    snprintf(buff, sizeof(buff), "z: %7.1f %7.1f %7.1f", (int)1000 * IMU.az, IMU.gz, IMU.mz);
     tft.drawString(buff, 0, 48);
-    delay(200);
+    snprintf(buff, sizeof(buff), "M: %7.1f %7.1f %7.1f",
+                                 (int)1000 * sqrt(IMU.ax*IMU.ax + IMU.ay*IMU.ay + IMU.az*IMU.az),
+                                 sqrt(IMU.gx*IMU.gx + IMU.gy*IMU.gy + IMU.gz*IMU.gz),
+                                 sqrt(IMU.mx*IMU.mx + IMU.my*IMU.my + IMU.mz*IMU.mz)
+                                );
+    tft.drawString(buff, 0, 64);
 }
 
 
@@ -492,6 +498,7 @@ void loop()
         break;
     case 1:
         IMU_Show();
+	delay(200);
         break;
     case 2:
         tft.setTextColor(TFT_GREEN, TFT_BLACK);
