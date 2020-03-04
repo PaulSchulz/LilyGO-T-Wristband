@@ -396,12 +396,12 @@ void RTC_Show()
         uint8_t ypos = 0;
         if (omm != mm) { // Only redraw every minute to minimise flicker
             // Uncomment ONE of the next 2 lines, using the ghost image demonstrates text overlay as time is drawn over it
-            tft.setTextColor(0x39C4, TFT_BLACK);  // Leave a 7 segment ghost image, comment out next line!
-            //tft.setTextColor(TFT_BLACK, TFT_BLACK); // Set font colour to black to wipe image
+            // tft.setTextColor(0x39C4, TFT_BLACK);  // Leave a 7 segment ghost image, comment out next line!
+            tft.setTextColor(TFT_BLACK, TFT_BLACK); // Set font colour to black to wipe image
             // Font 7 is to show a pseudo 7 segment display.
             // Font 7 only contains characters [space] 0 1 2 3 4 5 6 7 8 9 0 : .
             tft.drawString("88:88", xpos, ypos, 7); // Overwrite the text to clear it
-            tft.setTextColor(0xAAA0, TFT_BLACK);
+            tft.setTextColor(TFT_SILVER, TFT_BLACK);
             omm = mm;
 
             if (hh < 10) xpos += tft.drawChar('0', xpos, ypos, 7);
@@ -413,9 +413,9 @@ void RTC_Show()
         }
 
         if (ss % 2) { // Flash the colon
-            tft.setTextColor(0x39C4, TFT_BLACK);
+            tft.setTextColor(TFT_DARKGREY, TFT_BLACK);
             xpos += tft.drawChar(':', xcolon, ypos, 7);
-            tft.setTextColor(0xFBE0, TFT_BLACK);
+            tft.setTextColor(TFT_SILVER, TFT_BLACK);
         } else {
             tft.drawChar(':', xcolon, ypos, 7);
         }
